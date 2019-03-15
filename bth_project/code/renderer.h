@@ -11,6 +11,14 @@ struct Renderer
 
 struct Camera
 {
+	glm::vec3 position;
+	float yaw;
+	float pitch;
+	Matrices mats;
+};
+
+struct Matrices
+{
 	glm::mat4 view;
 	glm::mat4 projection;
 };
@@ -20,8 +28,8 @@ void renderer_render(Renderer* renderer);
 
 
 void update(Camera* camera);
-unsigned int createUniformBuffer(Camera* camera);
-void editUniformBuffer(unsigned int buffer, Camera* camera);
+unsigned int createUniformBuffer(unsigned int size, int index);
+void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
 
 
 #endif
