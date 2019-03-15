@@ -21,15 +21,16 @@ void renderer_update(Renderer * renderer)
 
 	update(&renderer->camera, renderer->camera.x - oldX, renderer->camera.y - oldX);
 
-	editUniformBuffer(renderer->UBO, sizeof(Matrices), &renderer->camera.mats);
+	
 }
 
 void renderer_render(Renderer* renderer)
 {
+	editUniformBuffer(renderer->UBO, sizeof(Matrices), &renderer->camera.mats);
+	
 	shader_use(&renderer->pbr);
 	shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[0]);
-	shader_setMat4(&renderer->pbr, "view", renderer->camera.mats.view);
-	shader_setMat4(&renderer->pbr, "projection", renderer->camera.mats.projection);
+	
 	glBindVertexArray(renderer->spheres.vao[0]);
 	glDrawElements(GL_TRIANGLE_STRIP, renderer->spheres.index_count[0], GL_UNSIGNED_INT, 0);
 }
