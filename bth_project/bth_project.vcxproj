@@ -167,6 +167,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="code\application_manager.hpp" />
+    <ClInclude Include="code\shader.h" />
     <ClInclude Include="external\include\SDL\begin_code.h" />
     <ClInclude Include="external\include\SDL\close_code.h" />
     <ClInclude Include="external\include\SDL\SDL.h" />
