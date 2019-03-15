@@ -1,6 +1,6 @@
 #include "application_manager.hpp"
 
-void ApplicationManager::run()
+void run()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
@@ -47,12 +47,12 @@ void ApplicationManager::run()
 	}
 }
 
-void ApplicationManager::update(double dt)
+void update(double dt)
 {
 
 }
 
-void ApplicationManager::draw(double dt)
+void draw(double dt)
 {
 
 }

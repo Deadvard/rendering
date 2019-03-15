@@ -4,15 +4,13 @@
 #include <glad.c>
 #include <SDL/SDL.h>
 
-class ApplicationManager
-{
-public:
-	void run();
-private:
-	void update(double dt);
-	void draw(double dt);
+struct ApplicationManager
+{	
 
 };
 
+void run();
+void update(double dt);
+void draw(double dt);
 
 #endif
