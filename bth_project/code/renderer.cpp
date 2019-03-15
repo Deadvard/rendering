@@ -10,7 +10,7 @@ void renderer_init(Renderer * renderer)
 {
 	shader_init(&renderer->pbr, "resources/epic.vs", "resources/epic.fs");
 	spheres_init(&renderer->spheres);
-	renderer->UBO = createUniformBuffer(sizeof(Matrices), 4);
+	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
 }
 
 void renderer_update(Renderer * renderer)
@@ -30,7 +30,8 @@ void renderer_render(Renderer* renderer)
 	shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[0]);
 	shader_setMat4(&renderer->pbr, "view", renderer->camera.mats.view);
 	shader_setMat4(&renderer->pbr, "projection", renderer->camera.mats.projection);
-
+	glBindVertexArray(renderer->spheres.vao[0]);
+	glDrawElements(GL_TRIANGLE_STRIP, renderer->spheres.index_count[0], GL_UNSIGNED_INT, 0);
 }
 
 void update(Camera* camera, int dX, int dY)
