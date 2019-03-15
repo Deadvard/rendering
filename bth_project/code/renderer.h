@@ -17,6 +17,8 @@ struct Matrices
 
 struct Camera
 {
+	int x;
+	int y;
 	glm::vec3 position;
 	float yaw;
 	float pitch;
@@ -27,7 +29,7 @@ void renderer_init(Renderer* renderer);
 void renderer_render(Renderer* renderer);
 
 
-void update(Camera* camera, float dX, float dY);
+void update(Camera* camera, int dX, int dY);
 unsigned int createUniformBuffer(unsigned int size, int index);
 void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
 

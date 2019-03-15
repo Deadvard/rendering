@@ -36,7 +36,7 @@ bool window_init(Window * window, const char* title, int width, int height)
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return false;
 	}
-
+	
 	return true;
 }
 

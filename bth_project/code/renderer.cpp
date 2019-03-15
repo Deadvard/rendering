@@ -11,11 +11,11 @@ void renderer_render(Renderer* renderer)
 	shader_use(&renderer->pbr);
 }
 
-void update(Camera* camera, float dX, float dY)
+void update(Camera* camera, int dX, int dY)
 {
 	float sensitivity = 0.05f;
-	float xoffset = dX * sensitivity;
-	float yoffset = dY * sensitivity;
+	float xoffset = (float)dX * sensitivity;
+	float yoffset = (float)dY * sensitivity;
 
 	camera->yaw += xoffset;
 	camera->pitch += yoffset;
