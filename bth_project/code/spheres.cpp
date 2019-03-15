@@ -92,6 +92,6 @@ void spheres_init(Spheres* spheres)
 		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride, (void*)(5 * sizeof(float)));
 
 		spheres->model[i] = glm::mat4(1.0f);
-		//spheres->model[i][3] = glm::vec4(0.f,0.f, 10.f, 1.f);
+		spheres->model[i][3] = glm::vec4(0.f,0.f, -10.f, 1.f);
 	}
 }
