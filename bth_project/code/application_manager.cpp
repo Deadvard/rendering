@@ -11,11 +11,19 @@ void ApplicationManager::run()
 		640,
 		480,
 		SDL_WINDOW_OPENGL);
+	
+	double timestep = 1.0 / 120.0;
+	double last_time = (double)SDL_GetTicks() / 1000.0;
+	double delta_time = 0.0;
 
 	bool running = true;
 
 	while (running)
 	{
+		double now = (double)SDL_GetTicks() / 1000.0;
+		delta_time += now - last_time;
+		last_time = now;
+		
 		SDL_Event e;
 		while (SDL_PollEvent(&e))
 		{
@@ -34,17 +42,17 @@ void ApplicationManager::run()
 			}
 		}
 
-		update();
-		draw();
+		update(delta_time);
+		draw(delta_time);
 	}
 }
 
-void ApplicationManager::update()
+void ApplicationManager::update(double dt)
 {
 
 }
 
-void ApplicationManager::draw()
+void ApplicationManager::draw(double dt)
 {
 
 }

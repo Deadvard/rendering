@@ -9,8 +9,8 @@ class ApplicationManager
 public:
 	void run();
 private:
-	void update();
-	void draw();
+	void update(double dt);
+	void draw(double dt);
 
 };
 
