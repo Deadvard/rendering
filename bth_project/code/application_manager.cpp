@@ -32,6 +32,10 @@ void run()
 			}
 			case SDL_KEYDOWN:
 			{
+				if (e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					running = false;
+				}
 				break;
 			}
 			}
