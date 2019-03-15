@@ -13,8 +13,8 @@ out vertex_data
 
 layout(binding = 0) uniform matrices
 {
-  mat4 projection;
   mat4 view;
+  mat4 projection;
 };
 
 uniform mat4 model;
@@ -25,5 +25,5 @@ void main()
     tex_coord = texture_coordinate;
 	world_normal = (model * vec4(normal, 0)).xyz;
 
-	gl_Position = projection * view * model * vec4(position, 1);
+	gl_Position = model * vec4(position, 1);
 }

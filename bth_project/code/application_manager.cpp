@@ -32,7 +32,6 @@ void run()
 			}
 			case SDL_KEYDOWN:
 			{
-				running = false;
 				break;
 			}
 			}
