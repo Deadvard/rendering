@@ -1,5 +1,5 @@
-#ifndef WINDOW_HPP
-#define WINDOW_HPP
+#ifndef WINDOW_H
+#define WINDOW_H
 #include <SDL/SDL.h>
 
 struct Window

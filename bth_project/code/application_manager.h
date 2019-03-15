@@ -1,7 +1,7 @@
-#ifndef APPLICATION_MANAGER_HPP
-#define APPLICATION_MANAGER_HPP
+#ifndef APPLICATION_MANAGER_H
+#define APPLICATION_MANAGER_H
 
-#include "window.hpp"
+#include "window.h"
 
 struct Game
 {	
