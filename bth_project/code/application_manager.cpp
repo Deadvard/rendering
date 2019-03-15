@@ -4,7 +4,8 @@ void run()
 {
 	Game game = {};
 	window_init(&game.window, "APPLICATION MANAGER", 1280, 720);
-	
+	renderer_init(&game.renderer);
+
 	double timestep = 1.0 / 120.0;
 	double last_time = (double)SDL_GetTicks() / 1000.0;
 	double delta_time = 0.0;
