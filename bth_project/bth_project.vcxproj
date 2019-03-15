@@ -168,6 +168,7 @@
   <ItemGroup>
     <ClInclude Include="code\application_manager.hpp" />
     <ClInclude Include="code\shader.h" />
+    <ClInclude Include="code\window.hpp" />
     <ClInclude Include="external\include\SDL\begin_code.h" />
     <ClInclude Include="external\include\SDL\close_code.h" />
     <ClInclude Include="external\include\SDL\SDL.h" />
@@ -256,6 +257,7 @@
   <ItemGroup>
     <ClCompile Include="code\application_manager.cpp" />
     <ClCompile Include="code\main.cpp" />
+    <ClCompile Include="code\window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

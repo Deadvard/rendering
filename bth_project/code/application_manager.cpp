@@ -2,17 +2,8 @@
 
 void run()
 {
-	SDL_Init(SDL_INIT_EVERYTHING);
-
-	SDL_Window* window = SDL_CreateWindow(
-		"An SDL2 window",
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
-		640,
-		480,
-		SDL_WINDOW_OPENGL);
-
 	Game game = {};
+	window_init(&game.window, "APPLICATION MANAGER", 1280, 720);
 	
 	double timestep = 1.0 / 120.0;
 	double last_time = (double)SDL_GetTicks() / 1000.0;
@@ -45,7 +36,7 @@ void run()
 		}
 
 		update(&game);
-		draw(&game);
+		render(&game);
 	}
 }
 
@@ -54,7 +45,11 @@ void update(Game* game)
 
 }
 
-void draw(Game* game)
+void render(Game* game)
 {
+	window_clear();
 
+
+
+	window_display(&game->window);
 }

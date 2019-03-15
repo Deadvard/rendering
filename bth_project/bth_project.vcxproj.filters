@@ -273,12 +273,18 @@
     <ClInclude Include="code\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="code\window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="code\application_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="code\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
