@@ -11,17 +11,16 @@ void renderer_init(Renderer * renderer)
 	shader_init(&renderer->pbr, "resources/epic.vs", "resources/epic.fs");
 	spheres_init(&renderer->spheres);
 	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
+
+	renderer->camera.yaw = -90.0f;
 }
 
 void renderer_update(Renderer * renderer)
 {
-	int oldX = renderer->camera.x;
-	int oldY = renderer->camera.y;
-	SDL_GetMouseState(&renderer->camera.x, &renderer->camera.y);
-
-	update(&renderer->camera, renderer->camera.x - oldX, renderer->camera.y - oldX);
-
-	
+	int x = 0;
+	int y = 0;
+	SDL_GetRelativeMouseState(&x, &y);
+	update(&renderer->camera, x, -y);
 }
 
 void renderer_render(Renderer* renderer)
@@ -43,9 +42,6 @@ void update(Camera* camera, int dX, int dY)
 
 	camera->yaw += xoffset;
 	camera->pitch += yoffset;
-
-	camera->yaw = -80.0f;
-	camera->pitch = 0.0f;
 
 	if (camera->pitch > 89.0f)
 		camera->pitch = 89.0f;

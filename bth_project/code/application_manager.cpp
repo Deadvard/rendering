@@ -13,7 +13,7 @@ void run()
 	double delta_time = 0.0;
 
 	bool running = true;
-
+	
 	while (running)
 	{
 		double now = (double)SDL_GetTicks() / 1000.0;

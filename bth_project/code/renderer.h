@@ -13,8 +13,6 @@ struct Matrices
 
 struct Camera
 {
-	int x;
-	int y;
 	glm::vec3 position;
 	float yaw;
 	float pitch;
