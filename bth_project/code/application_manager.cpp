@@ -11,6 +11,8 @@ void run()
 		640,
 		480,
 		SDL_WINDOW_OPENGL);
+
+	Game game = {};
 	
 	double timestep = 1.0 / 120.0;
 	double last_time = (double)SDL_GetTicks() / 1000.0;
@@ -42,17 +44,17 @@ void run()
 			}
 		}
 
-		update(delta_time);
-		draw(delta_time);
+		update(&game);
+		draw(&game);
 	}
 }
 
-void update(double dt)
+void update(Game* game)
 {
 
 }
 
-void draw(double dt)
+void draw(Game* game)
 {
 
 }

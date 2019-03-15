@@ -4,13 +4,13 @@
 #include <glad.c>
 #include <SDL/SDL.h>
 
-struct ApplicationManager
+struct Game
 {	
 
 };
 
 void run();
-void update(double dt);
-void draw(double dt);
+void update(Game* game);
+void draw(Game* game);
 
 #endif
