@@ -9,6 +9,17 @@ int main(int argc, char** argv)
 		640,                    
 		480,                    
 		SDL_WINDOW_OPENGL);
+
+	bool running = true;
+
+	while (running)
+	{
+		SDL_Event e;
+		while (SDL_PollEvent(&e))
+		{
+
+		}
+	}
 	
 	return 0;
 }
