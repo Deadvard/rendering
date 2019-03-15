@@ -166,6 +166,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="code\application_manager.hpp" />
     <ClInclude Include="external\include\SDL\begin_code.h" />
     <ClInclude Include="external\include\SDL\close_code.h" />
     <ClInclude Include="external\include\SDL\SDL.h" />
@@ -252,6 +253,7 @@
     <ClInclude Include="external\include\SDL\SDL_vulkan.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="code\application_manager.cpp" />
     <ClCompile Include="code\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
