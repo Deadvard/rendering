@@ -9,18 +9,18 @@ struct Renderer
 	Shader pbr;
 };
 
+struct Matrices
+{
+	glm::mat4 view;
+	glm::mat4 projection;
+};
+
 struct Camera
 {
 	glm::vec3 position;
 	float yaw;
 	float pitch;
 	Matrices mats;
-};
-
-struct Matrices
-{
-	glm::mat4 view;
-	glm::mat4 projection;
 };
 
 void renderer_init(Renderer* renderer);

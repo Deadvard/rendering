@@ -38,7 +38,8 @@ void run()
 			}
 			}
 		}
-		float dX, dY;
+		float dX = 0.0f;
+		float dY = 0.0f;
 		update(&camera, dX, dY);
 		editUniformBuffer(UBO, sizeof(Matrices), &camera.mats);
 
