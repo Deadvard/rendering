@@ -6,6 +6,9 @@ void run()
 	window_init(&game.window, "APPLICATION MANAGER", 1280, 720);
 	renderer_init(&game.renderer);
 
+	Camera camera = {};
+	unsigned int UBO = createUniformBuffer(sizeof(Matrices), 4);
+
 	double timestep = 1.0 / 120.0;
 	double last_time = (double)SDL_GetTicks() / 1000.0;
 	double delta_time = 0.0;
@@ -35,6 +38,9 @@ void run()
 			}
 			}
 		}
+		float dX, dY;
+		update(&camera, dX, dY);
+		editUniformBuffer(UBO, sizeof(Matrices), &camera.mats);
 
 		update(&game);
 		render(&game);

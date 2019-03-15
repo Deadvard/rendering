@@ -27,7 +27,7 @@ void renderer_init(Renderer* renderer);
 void renderer_render(Renderer* renderer);
 
 
-void update(Camera* camera);
+void update(Camera* camera, float dX, float dY);
 unsigned int createUniformBuffer(unsigned int size, int index);
 void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
 
