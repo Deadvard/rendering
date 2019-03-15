@@ -9,6 +9,13 @@ bool window_init(Window * window, const char* title, int width, int height)
 	window->window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		width, height, SDL_WINDOW_OPENGL);
 
+	if (!window->window)
+	{
+		std::cout << "Unable to create window\n";
+		std::cout << "SLD Error : " << SDL_GetError() << std::endl;
+		return false;
+	}
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -21,13 +28,6 @@ bool window_init(Window * window, const char* title, int width, int height)
 	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	SDL_GL_SetSwapInterval(1);
-
-	if (!window->window)
-	{
-		std::cout << "Unable to create window\n";
-		std::cout << "SLD Error : " << SDL_GetError() << std::endl;
-		return false;
-	}
 
 	window->gl_context = SDL_GL_CreateContext(window->window);
 

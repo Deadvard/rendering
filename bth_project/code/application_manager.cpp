@@ -38,6 +38,8 @@ void run()
 		update(&game);
 		render(&game);
 	}
+
+	window_destroy(&game.window);
 }
 
 void update(Game* game)
