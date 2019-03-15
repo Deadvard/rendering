@@ -25,5 +25,5 @@ void main()
     tex_coord = texture_coordinate;
 	world_normal = (model * vec4(normal, 0)).xyz;
 
-	gl_Position = vec4(position, 1);
+	gl_Position = projection * view * model * vec4(position, 1);
 }

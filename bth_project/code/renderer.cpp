@@ -44,6 +44,9 @@ void update(Camera* camera, int dX, int dY)
 	camera->yaw += xoffset;
 	camera->pitch += yoffset;
 
+	camera->yaw = -80.0f;
+	camera->pitch = 0.0f;
+
 	if (camera->pitch > 89.0f)
 		camera->pitch = 89.0f;
 	if (camera->pitch < -89.0f)
