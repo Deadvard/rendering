@@ -15,7 +15,7 @@ struct Shader
 	unsigned int ID;
 };
 
-void shader_init(Shader* shader, const char* vertexPath, const char* fragmentPath)
+static void shader_init(Shader* shader, const char* vertexPath, const char* fragmentPath)
 {
 	// 1. retrieve the vertex/fragment source code from filePath
 	std::string vertexCode;
@@ -70,28 +70,28 @@ void shader_init(Shader* shader, const char* vertexPath, const char* fragmentPat
 	glDeleteShader(fragment);
 }
 
-void shader_use(Shader* shader)
+static void shader_use(Shader* shader)
 {
 	glUseProgram(shader->ID);
 }
 // utility uniform functions
 // ------------------------------------------------------------------------
-void shader_setBool(Shader* shader, const std::string &name, bool value)
+static void shader_setBool(Shader* shader, const std::string &name, bool value)
 {
 	glUniform1i(glGetUniformLocation(shader->ID, name.c_str()), (int)value);
 }
 // ------------------------------------------------------------------------
-void shader_setInt(Shader* shader, const std::string &name, int value)
+static void shader_setInt(Shader* shader, const std::string &name, int value)
 {
 	glUniform1i(glGetUniformLocation(shader->ID, name.c_str()), value);
 }
 // ------------------------------------------------------------------------
-void shader_setFloat(Shader* shader, const std::string &name, float value)
+static void shader_setFloat(Shader* shader, const std::string &name, float value)
 {
 	glUniform1f(glGetUniformLocation(shader->ID, name.c_str()), value);
 }
 
-void checkCompileErrors(unsigned int shader, std::string type)
+static void checkCompileErrors(unsigned int shader, std::string type)
 {
 	int success;
 	char infoLog[1024];
