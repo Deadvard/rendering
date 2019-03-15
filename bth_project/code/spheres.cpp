@@ -20,16 +20,16 @@ void spheres_init(Spheres* spheres)
 
 		const unsigned int X_SEGMENTS = 64;
 		const unsigned int Y_SEGMENTS = 64;
-		const float PI = 3.14159265359;
+		const double PI = 3.14159265359;
 		for (unsigned int y = 0; y <= Y_SEGMENTS; ++y)
 		{
 			for (unsigned int x = 0; x <= X_SEGMENTS; ++x)
 			{
 				float xSegment = (float)x / (float)X_SEGMENTS;
 				float ySegment = (float)y / (float)Y_SEGMENTS;
-				float xPos = std::cos(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
-				float yPos = std::cos(ySegment * PI);
-				float zPos = std::sin(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
+				float xPos = (float)std::cos(xSegment * 2.0f * PI) * (float)std::sin(ySegment * PI);
+				float yPos = (float)std::cos(ySegment * PI);
+				float zPos = (float)std::sin(xSegment * 2.0f * PI) * (float)std::sin(ySegment * PI);
 
 				positions.push_back(glm::vec3(xPos, yPos, zPos));
 				uv.push_back(glm::vec2(xSegment, ySegment));
@@ -58,7 +58,7 @@ void spheres_init(Spheres* spheres)
 			}
 			oddRow = !oddRow;
 		}
-		spheres->index_count[i] = indices.size();
+		spheres->index_count[i] = (unsigned int)indices.size();
 
 		std::vector<float> data;
 		for (int i = 0; i < positions.size(); ++i)
@@ -83,7 +83,7 @@ void spheres_init(Spheres* spheres)
 		glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), &data[0], GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, spheres->ebo[i]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
-		float stride = (3 + 2 + 3) * sizeof(float);
+		int stride = (3 + 2 + 3) * sizeof(float);
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
 		glEnableVertexAttribArray(1);

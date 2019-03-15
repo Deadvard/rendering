@@ -24,7 +24,7 @@ void update(Camera* camera, float dX, float dY)
 		camera->pitch = 89.0f;
 	if (camera->pitch < -89.0f)
 		camera->pitch = -89.0f;
-
+	
 	glm::vec3 forward;
 	forward.x = glm::cos(glm::radians(camera->yaw)) * glm::cos(glm::radians(camera->pitch));
 	forward.y = glm::sin(glm::radians(camera->pitch));
