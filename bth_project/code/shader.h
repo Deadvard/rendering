@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 
 void checkCompileErrors(unsigned int shader, std::string type);
 
@@ -89,6 +90,12 @@ static void shader_setInt(Shader* shader, const std::string &name, int value)
 static void shader_setFloat(Shader* shader, const std::string &name, float value)
 {
 	glUniform1f(glGetUniformLocation(shader->ID, name.c_str()), value);
+}
+
+static void shader_setMat4(Shader* shader, const std::string& name, const glm::mat4& mat)
+{
+	glUniformMatrix4fv(glGetUniformLocation(shader->ID, name.c_str()),
+		1, GL_FALSE, glm::value_ptr(mat));
 }
 
 static void checkCompileErrors(unsigned int shader, std::string type)

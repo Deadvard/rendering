@@ -1,14 +1,36 @@
 #include "renderer.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <SDL/SDL.h>
+
+void update(Camera* camera, int dX, int dY);
+unsigned int createUniformBuffer(unsigned int size, int index);
+void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
 
 void renderer_init(Renderer * renderer)
 {
 	shader_init(&renderer->pbr, "resources/epic.vs", "resources/epic.fs");
+	spheres_init(&renderer->spheres);
+	renderer->UBO = createUniformBuffer(sizeof(Matrices), 4);
+}
+
+void renderer_update(Renderer * renderer)
+{
+	int oldX = renderer->camera.x;
+	int oldY = renderer->camera.y;
+	SDL_GetMouseState(&renderer->camera.x, &renderer->camera.y);
+
+	update(&renderer->camera, renderer->camera.x - oldX, renderer->camera.y - oldX);
+
+	editUniformBuffer(renderer->UBO, sizeof(Matrices), &renderer->camera.mats);
 }
 
 void renderer_render(Renderer* renderer)
 {
 	shader_use(&renderer->pbr);
+	shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[0]);
+	shader_setMat4(&renderer->pbr, "view", renderer->camera.mats.view);
+	shader_setMat4(&renderer->pbr, "projection", renderer->camera.mats.projection);
+
 }
 
 void update(Camera* camera, int dX, int dY)

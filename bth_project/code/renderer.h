@@ -3,11 +3,7 @@
 
 #include <glm/glm.hpp>
 #include "shader.h"
-
-struct Renderer
-{
-	Shader pbr;
-};
+#include "spheres.h"
 
 struct Matrices
 {
@@ -25,13 +21,19 @@ struct Camera
 	Matrices mats;
 };
 
+struct Renderer
+{
+	Shader pbr;
+	Spheres spheres;
+	Camera camera;
+	unsigned int UBO;
+};
+
 void renderer_init(Renderer* renderer);
 void renderer_render(Renderer* renderer);
+void renderer_update(Renderer* renderer);
 
 
-void update(Camera* camera, int dX, int dY);
-unsigned int createUniformBuffer(unsigned int size, int index);
-void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
 
 
 #endif

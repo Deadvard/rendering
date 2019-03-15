@@ -8,9 +8,6 @@ void run()
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
-	Camera camera = {};
-	unsigned int UBO = createUniformBuffer(sizeof(Matrices), 4);
-
 	double timestep = 1.0 / 120.0;
 	double last_time = (double)SDL_GetTicks() / 1000.0;
 	double delta_time = 0.0;
@@ -40,14 +37,7 @@ void run()
 			}
 			}
 		}
-		
-		int oldX = camera.x;
-		int oldY = camera.y;
-		SDL_GetMouseState(&camera.x, &camera.y);
 
-		update(&camera, camera.x - oldX, camera.y - oldX);
-		
-		editUniformBuffer(UBO, sizeof(Matrices), &camera.mats);
 
 		update(&game);
 		render(&game);
@@ -58,14 +48,14 @@ void run()
 
 void update(Game* game)
 {
-
+	renderer_update(&game->renderer);
 }
 
 void render(Game* game)
 {
 	window_clear();
 
-
+	renderer_render(&game->renderer);
 
 	window_display(&game->window);
 }
