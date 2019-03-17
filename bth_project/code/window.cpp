@@ -36,7 +36,8 @@ bool window_init(Window * window, const char* title, int width, int height)
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return false;
 	}
-	
+	glEnable(GL_DEPTH_TEST);
+
 	return true;
 }
 
@@ -49,7 +50,7 @@ void window_destroy(Window * window)
 
 void window_clear()
 {
-	glClearColor(0.3, 0.0, 0.0, 1.0);
+	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
