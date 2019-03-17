@@ -12,11 +12,11 @@ void renderer_init(Renderer * renderer)
 	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
 	renderer->camera.yaw = -90.0f;
 	
-	renderer->textures.albedo[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-albedo.png");
-	renderer->textures.normal[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-normal.png");
-	renderer->textures.metallic[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-metal.png");
-	renderer->textures.roughness[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-roughness.png");
-	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-ao.png");
+	renderer->textures.albedo[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-albedo.png");
+	renderer->textures.normal[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-normal-ue.png");
+	renderer->textures.metallic[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-metalness.png");
+	renderer->textures.roughness[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-roughness.png");
+	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-ao.png");
 
 	for (int i = 0; i < renderer->textures.num_textures; i++)
 	{
