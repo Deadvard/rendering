@@ -12,11 +12,15 @@ void renderer_init(Renderer * renderer)
 	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
 	renderer->camera.yaw = -90.0f;
 
-	renderer->textures.albedo[0] = IMG_Load("resources/textures/bamboo-wood-semigloss-albedo.png");
-	renderer->textures.normal[0] = IMG_Load("resources/textures/bamboo-wood-semigloss-normal.png");
-	renderer->textures.metallic[0] = IMG_Load("resources/textures/bamboo-wood-semigloss-metal.png");
-	renderer->textures.roughness[0] = IMG_Load("resources/textures/bamboo-wood-semigloss-roughness.png");
-	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/bamboo-wood-semigloss-ao.png");
+	IMG_Init(IMG_INIT_PNG);
+	
+	renderer->textures.albedo[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-albedo.png");
+	renderer->textures.normal[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-normal.png");
+	renderer->textures.metallic[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-metal.png");
+	renderer->textures.roughness[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-roughness.png");
+	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-ao.png");
+
+	if (!renderer->textures.albedo[0]) std::cout << SDL_GetError();
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -28,12 +32,12 @@ void renderer_init(Renderer * renderer)
 		{
 		case 0:
 			if (renderer->textures.albedo[0]->format->BytesPerPixel == 4)
-				mode = GL_RGBA;
+				mode = GL_RGB;
 			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.albedo[0]->w, renderer->textures.albedo[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.albedo[0]->pixels);
 			break;
 		case 1:
 			if (renderer->textures.normal[0]->format->BytesPerPixel == 4)
-				mode = GL_RGBA;
+				mode = GL_RGB;
 			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.normal[0]->w, renderer->textures.normal[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.normal[0]->pixels);
 			break;
 		case 2:
@@ -43,12 +47,12 @@ void renderer_init(Renderer * renderer)
 			break;
 		case 3:
 			if (renderer->textures.roughness[0]->format->BytesPerPixel == 4)
-				mode = GL_RGBA;
+				mode = GL_RGB;
 			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.roughness[0]->w, renderer->textures.roughness[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.roughness[0]->pixels);
 			break;
 		case 4:
 			if (renderer->textures.ambient_occlusion[0]->format->BytesPerPixel == 4)
-				mode = GL_RGBA;
+				mode = GL_RGB;
 			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.ambient_occlusion[0]->w, renderer->textures.ambient_occlusion[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.ambient_occlusion[0]->pixels);
 			break;
 		}
