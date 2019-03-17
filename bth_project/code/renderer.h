@@ -29,6 +29,7 @@ struct Camera
 	float yaw;
 	float pitch;
 	Matrices mats;
+	float dt;
 };
 
 struct Renderer

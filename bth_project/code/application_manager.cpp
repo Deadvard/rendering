@@ -17,7 +17,7 @@ void run()
 	while (running)
 	{
 		double now = (double)SDL_GetTicks() / 1000.0;
-		delta_time += now - last_time;
+		delta_time = now - last_time;//delta_time += now - last_time;
 		last_time = now;
 		
 		SDL_Event e;
@@ -41,7 +41,7 @@ void run()
 			}
 		}
 
-
+		game.dt = delta_time;
 		update(&game);
 		render(&game);
 	}
@@ -51,6 +51,7 @@ void run()
 
 void update(Game* game)
 {
+	game->renderer.camera.dt = game->dt;
 	renderer_update(&game->renderer);
 }
 

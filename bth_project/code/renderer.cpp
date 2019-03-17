@@ -118,7 +118,21 @@ void update(Camera* camera)
 	forward.z = glm::sin(glm::radians(camera->yaw)) * glm::cos(glm::radians(camera->pitch));
 	forward = glm::normalize(forward);
 
-	camera->mats.view = glm::lookAt(camera->position, camera->position + forward, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+
+	float velocity = 10.0f * camera->dt;
+	glm::vec3 direction = glm::vec3(0.0f, 0.0f, 0.0f);
+
+	const Uint8 *state = SDL_GetKeyboardState(NULL);
+	if (state[SDL_SCANCODE_W]) direction.z += 1.0f;
+	if (state[SDL_SCANCODE_A]) direction.x -= 1.0f;
+	if (state[SDL_SCANCODE_S]) direction.z -= 1.0f;
+	if (state[SDL_SCANCODE_D]) direction.x += 1.0f;
+
+	camera->position += forward * velocity * direction.z;
+	camera->position += glm::normalize(glm::cross(forward, up)) * velocity * direction.x;
+
+	camera->mats.view = glm::lookAt(camera->position, camera->position + forward, up);
 	camera->mats.projection = glm::perspective(glm::radians(90.0f), 16.0f / 9.0f, 0.1f, 1000.f);
 }
 
