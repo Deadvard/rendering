@@ -2,7 +2,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <SDL/SDL.h>
 
-void update(Camera* camera, int dX, int dY);
+void update(Camera* camera);
 unsigned int createUniformBuffer(unsigned int size, int index);
 void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
 
@@ -17,10 +17,7 @@ void renderer_init(Renderer * renderer)
 
 void renderer_update(Renderer * renderer)
 {
-	int x = 0;
-	int y = 0;
-	SDL_GetRelativeMouseState(&x, &y);
-	update(&renderer->camera, x, -y);
+	update(&renderer->camera);
 }
 
 void renderer_render(Renderer* renderer)
@@ -34,8 +31,13 @@ void renderer_render(Renderer* renderer)
 	glDrawElements(GL_TRIANGLE_STRIP, renderer->spheres.index_count[0], GL_UNSIGNED_INT, 0);
 }
 
-void update(Camera* camera, int dX, int dY)
+void update(Camera* camera)
 {
+	int dX = 0;
+	int dY = 0;
+	SDL_GetRelativeMouseState(&dX, &dY);
+	dY = -dY;
+
 	float sensitivity = 0.05f;
 	float xoffset = (float)dX * sensitivity;
 	float yoffset = (float)dY * sensitivity;
