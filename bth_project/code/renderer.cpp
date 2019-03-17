@@ -52,7 +52,10 @@ void renderer_init(Renderer * renderer)
 			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.ambient_occlusion[0]->w, renderer->textures.ambient_occlusion[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.ambient_occlusion[0]->pixels);
 			break;
 		}
-		
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	}
 	shader_init(&renderer->pbr, "resources/shaders/epic.vs", "resources/shaders/epic.fs");
@@ -91,15 +94,18 @@ void renderer_render(Renderer* renderer)
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[0]);
+
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[1]);
+
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[2]);
+
 	glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[3]);
+
 	glActiveTexture(GL_TEXTURE4);
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[4]);
-
 
 	glBindVertexArray(renderer->spheres.vao[0]);
 	glDrawElements(GL_TRIANGLE_STRIP, renderer->spheres.index_count[0], GL_UNSIGNED_INT, 0);
