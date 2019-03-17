@@ -4,6 +4,18 @@
 #include <glm/glm.hpp>
 #include "shader.h"
 #include "spheres.h"
+#include <SDL/SDL_image.h>
+
+struct Textures
+{
+	static const int num_textures = 2;
+	unsigned int tex_id[num_textures * 5];
+	SDL_Surface* albedo[num_textures];
+	SDL_Surface* normal[num_textures];
+	SDL_Surface* metallic[num_textures];
+	SDL_Surface* roughness[num_textures];
+	SDL_Surface* ambient_occlusion[num_textures];
+};
 
 struct Matrices
 {
@@ -22,6 +34,7 @@ struct Camera
 struct Renderer
 {
 	Shader pbr;
+	Textures textures;
 	Spheres spheres;
 	Camera camera;
 	unsigned int UBO;
