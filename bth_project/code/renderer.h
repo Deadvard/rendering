@@ -6,15 +6,22 @@
 #include "spheres.h"
 #include <SDL/SDL_image.h>
 
+struct PointLights
+{
+	static const int num_lights = 4;
+	glm::vec3 positions[num_lights];
+};
+
 struct Textures
 {
-	static const int num_textures = 2;
-	unsigned int tex_id[num_textures * 5];
-	SDL_Surface* albedo[num_textures];
-	SDL_Surface* normal[num_textures];
-	SDL_Surface* metallic[num_textures];
-	SDL_Surface* roughness[num_textures];
-	SDL_Surface* ambient_occlusion[num_textures];
+	static const int num_texture_types = 2;
+	static const int num_textures = 5;
+	unsigned int tex_id[num_texture_types * num_textures];
+	SDL_Surface* albedo[num_texture_types];
+	SDL_Surface* normal[num_texture_types];
+	SDL_Surface* metallic[num_texture_types];
+	SDL_Surface* roughness[num_texture_types];
+	SDL_Surface* ambient_occlusion[num_texture_types];
 };
 
 struct Matrices
@@ -34,6 +41,7 @@ struct Camera
 
 struct Renderer
 {
+	PointLights point_lights;
 	Shader pbr;
 	Textures textures;
 	Spheres spheres;

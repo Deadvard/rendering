@@ -11,8 +11,6 @@ void renderer_init(Renderer * renderer)
 	spheres_init(&renderer->spheres);
 	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
 	renderer->camera.yaw = -90.0f;
-
-	IMG_Init(IMG_INIT_PNG);
 	
 	renderer->textures.albedo[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-albedo.png");
 	renderer->textures.normal[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-normal.png");
@@ -20,9 +18,7 @@ void renderer_init(Renderer * renderer)
 	renderer->textures.roughness[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-roughness.png");
 	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/bamboo/bamboo-wood-semigloss-ao.png");
 
-	if (!renderer->textures.albedo[0]) std::cout << SDL_GetError();
-
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < renderer->textures.num_textures; i++)
 	{
 		glGenTextures(1, &renderer->textures.tex_id[i]);
 		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[i]);
@@ -67,6 +63,11 @@ void renderer_init(Renderer * renderer)
 	shader_setInt(&renderer->pbr, "roughness_map", 3);
 	shader_setInt(&renderer->pbr, "ambient_occlusion_map", 4);
 
+	for (int i = 0; i < renderer->point_lights.num_lights; i++)
+	{
+		renderer->point_lights.positions[i] = glm::vec3(0,0, -5.f);
+	}
+
 }
 
 void renderer_update(Renderer * renderer)
@@ -79,8 +80,14 @@ void renderer_render(Renderer* renderer)
 	editUniformBuffer(renderer->UBO, sizeof(Matrices), &renderer->camera.mats);
 	
 	shader_use(&renderer->pbr);
+	shader_setVec3(&renderer->pbr, "cam_pos", renderer->camera.position);
 	shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[0]);
-	//glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[0]);
+
+	for (int i = 0; i < renderer->point_lights.num_lights; i++)
+	{
+		shader_setVec3(&renderer->pbr, "point_light_positions" + i, renderer->point_lights.positions[i]);
+		shader_setVec3(&renderer->pbr, "point_light_colors" + i, glm::vec3(1,1,0));
+	}
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[0]);
@@ -92,6 +99,7 @@ void renderer_render(Renderer* renderer)
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[3]);
 	glActiveTexture(GL_TEXTURE4);
 	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[4]);
+
 
 	glBindVertexArray(renderer->spheres.vao[0]);
 	glDrawElements(GL_TRIANGLE_STRIP, renderer->spheres.index_count[0], GL_UNSIGNED_INT, 0);
