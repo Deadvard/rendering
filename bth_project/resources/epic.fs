@@ -95,7 +95,7 @@ void main()
     F0 = mix(F0, albedo, metallic);
 
     vec3 Lo = vec3(0.0);
-    for(int i = 0; i < 4; ++i) 
+    for(int i = 0; i < 1; ++i) 
     {
         // calculate per-light radiance
         vec3 L = normalize(point_light_positions[i] - world_pos);

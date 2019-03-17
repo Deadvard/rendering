@@ -85,8 +85,8 @@ void renderer_render(Renderer* renderer)
 
 	for (int i = 0; i < renderer->point_lights.num_lights; i++)
 	{
-		shader_setVec3(&renderer->pbr, "point_light_positions" + i, renderer->point_lights.positions[i]);
-		shader_setVec3(&renderer->pbr, "point_light_colors" + i, glm::vec3(1,1,0));
+		shader_setVec3(&renderer->pbr, "point_light_positions[0]", renderer->point_lights.positions[i]);
+		shader_setVec3(&renderer->pbr, "point_light_colors[0]", glm::vec3(1,1,0));
 	}
 
 	glActiveTexture(GL_TEXTURE0);
