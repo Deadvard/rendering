@@ -8,6 +8,7 @@ struct Game
 {	
 	Window window;
 	Renderer renderer;
+	float dt;
 };
 
 void run();

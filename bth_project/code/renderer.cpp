@@ -58,7 +58,7 @@ void update(Camera* camera)
 
 	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 
-	float velocity = 1.0f;
+	float velocity = 10.0f * camera->dt;
 	glm::vec3 direction = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	const Uint8 *state = SDL_GetKeyboardState(NULL);
