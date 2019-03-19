@@ -15,7 +15,7 @@ uniform sampler2D metallic_map;
 uniform sampler2D roughness_map;
 uniform sampler2D ambient_occlusion_map;
 
-const int num_point_lights = 4;
+const int num_point_lights = 16;
 
 uniform vec3 point_light_positions[num_point_lights];
 uniform vec3 point_light_colors[num_point_lights];
@@ -95,7 +95,7 @@ void main()
     F0 = mix(F0, albedo, metallic);
 
     vec3 Lo = vec3(0.0);
-    for(int i = 0; i < 1; ++i) 
+    for(int i = 0; i < num_point_lights; ++i) 
     {
         // calculate per-light radiance
         vec3 L = normalize(point_light_positions[i] - world_pos);

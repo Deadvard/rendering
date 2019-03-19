@@ -8,7 +8,7 @@
 
 struct PointLights
 {
-	static const int num_lights = 4;
+	static const int num_lights = 16;
 	glm::vec3 positions[num_lights];
 };
 
