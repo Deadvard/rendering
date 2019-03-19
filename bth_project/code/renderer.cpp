@@ -68,6 +68,7 @@ void renderer_init(Renderer * renderer)
 		}
 		case 4:
 		{
+			mode = textureFormat(renderer->textures.ambient_occlusion[0]->format->BytesPerPixel);
 			glTexImage2D(GL_TEXTURE_2D, 0, mode,
 				renderer->textures.ambient_occlusion[0]->w, renderer->textures.ambient_occlusion[0]->h,
 				0, mode, GL_UNSIGNED_BYTE, renderer->textures.ambient_occlusion[0]->pixels);
