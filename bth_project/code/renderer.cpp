@@ -6,6 +6,14 @@ void update(Camera* camera);
 unsigned int createUniformBuffer(unsigned int size, int index);
 void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
 
+static unsigned int textureFormat(Uint8 BytesPerPixel)
+{
+	if (BytesPerPixel == 4) return GL_RGBA;
+	if (BytesPerPixel == 3) return GL_RGB;
+	if (BytesPerPixel == 2) return GL_RG;
+	return GL_RED;
+}
+
 void renderer_init(Renderer * renderer)
 {
 	spheres_init(&renderer->spheres);
@@ -22,35 +30,49 @@ void renderer_init(Renderer * renderer)
 	{
 		glGenTextures(1, &renderer->textures.tex_id[i]);
 		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[i]);
-
 		int mode = GL_RGB;
+		
 		switch (i)
 		{
 		case 0:
-			if (renderer->textures.albedo[0]->format->BytesPerPixel == 4)
-				mode = GL_RGB;
-			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.albedo[0]->w, renderer->textures.albedo[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.albedo[0]->pixels);
+		{
+			mode = textureFormat(renderer->textures.albedo[0]->format->BytesPerPixel);
+			glTexImage2D(GL_TEXTURE_2D, 0, mode,
+				renderer->textures.albedo[0]->w, renderer->textures.albedo[0]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.albedo[0]->pixels);
 			break;
+		}
 		case 1:
-			if (renderer->textures.normal[0]->format->BytesPerPixel == 4)
-				mode = GL_RGB;
-			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.normal[0]->w, renderer->textures.normal[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.normal[0]->pixels);
+		{
+			mode = textureFormat(renderer->textures.normal[0]->format->BytesPerPixel);
+			glTexImage2D(GL_TEXTURE_2D, 0, mode,
+				renderer->textures.normal[0]->w, renderer->textures.normal[0]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.normal[0]->pixels);
 			break;
+		}
 		case 2:
-			if (renderer->textures.metallic[0]->format->BytesPerPixel == 4)
-				mode = GL_RGBA;
-			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.metallic[0]->w, renderer->textures.metallic[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.metallic[0]->pixels);
+		{
+			mode = textureFormat(renderer->textures.metallic[0]->format->BytesPerPixel);
+			glTexImage2D(GL_TEXTURE_2D, 0, mode,
+				renderer->textures.metallic[0]->w, renderer->textures.metallic[0]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.metallic[0]->pixels);
 			break;
+		}
 		case 3:
-			if (renderer->textures.roughness[0]->format->BytesPerPixel == 4)
-				mode = GL_RGB;
-			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.roughness[0]->w, renderer->textures.roughness[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.roughness[0]->pixels);
+		{
+			mode = textureFormat(renderer->textures.roughness[0]->format->BytesPerPixel);
+			glTexImage2D(GL_TEXTURE_2D, 0, mode,
+				renderer->textures.roughness[0]->w, renderer->textures.roughness[0]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.roughness[0]->pixels);
 			break;
+		}
 		case 4:
-			if (renderer->textures.ambient_occlusion[0]->format->BytesPerPixel == 4)
-				mode = GL_RGB;
-			glTexImage2D(GL_TEXTURE_2D, 0, mode, renderer->textures.ambient_occlusion[0]->w, renderer->textures.ambient_occlusion[0]->h, 0, mode, GL_UNSIGNED_BYTE, renderer->textures.ambient_occlusion[0]->pixels);
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, mode,
+				renderer->textures.ambient_occlusion[0]->w, renderer->textures.ambient_occlusion[0]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.ambient_occlusion[0]->pixels);
 			break;
+		}
 		}
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
