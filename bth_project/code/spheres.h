@@ -4,7 +4,7 @@
 
 struct Spheres
 {
-	static const int num_spheres = 1;
+	static const int num_spheres = 2;
 	glm::mat4 model[num_spheres];
 	unsigned int vao[num_spheres];
 	unsigned int vbo[num_spheres];

@@ -94,6 +94,8 @@ void renderer_init(Renderer * renderer)
 		renderer->point_lights.positions[i] = glm::vec3(0,0, -16.f);
 	}
 
+	renderer->spheres.model[1][3] = glm::vec4(5.f, 0.f, -20.f, 1.f);
+
 }
 
 void renderer_update(Renderer * renderer)
@@ -105,33 +107,39 @@ void renderer_render(Renderer* renderer)
 {
 	editUniformBuffer(renderer->UBO, sizeof(Matrices), &renderer->camera.mats);
 	
-	shader_use(&renderer->pbr);
-	shader_setVec3(&renderer->pbr, "cam_pos", renderer->camera.position);
-	shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[0]);
-
-	for (int i = 0; i < renderer->point_lights.num_lights; i++)
+	for (int i = 0; i < renderer->spheres.num_spheres; i++)
 	{
-		shader_setVec3(&renderer->pbr, "point_light_positions[" + std::to_string(i) + "]", renderer->point_lights.positions[i]);
-		shader_setVec3(&renderer->pbr, "point_light_colors[" + std::to_string(i) + "]", glm::vec3(1,1,1));
+		shader_use(&renderer->pbr);
+		shader_setVec3(&renderer->pbr, "cam_pos", renderer->camera.position);
+		shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[i]);
+
+		for (int i = 0; i < renderer->point_lights.num_lights; i++)
+		{
+			shader_setVec3(&renderer->pbr, "point_light_positions[" + std::to_string(i) + "]", renderer->point_lights.positions[i]);
+			shader_setVec3(&renderer->pbr, "point_light_colors[" + std::to_string(i) + "]", glm::vec3(1,1,1));
+		}
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[0]);
+
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[1]);
+
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[2]);
+
+		glActiveTexture(GL_TEXTURE3);
+		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[3]);
+
+		glActiveTexture(GL_TEXTURE4);
+		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[4]);
+
+
+		glBindVertexArray(renderer->spheres.vao[i]);
+		glDrawElements(GL_TRIANGLE_STRIP, renderer->spheres.index_count[0], GL_UNSIGNED_INT, 0);
 	}
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[0]);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[1]);
-
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[2]);
-
-	glActiveTexture(GL_TEXTURE3);
-	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[3]);
-
-	glActiveTexture(GL_TEXTURE4);
-	glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[4]);
-
-	glBindVertexArray(renderer->spheres.vao[0]);
-	glDrawElements(GL_TRIANGLE_STRIP, renderer->spheres.index_count[0], GL_UNSIGNED_INT, 0);
 }
 
 void update(Camera* camera)
