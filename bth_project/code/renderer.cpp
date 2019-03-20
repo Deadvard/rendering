@@ -19,6 +19,8 @@ void renderer_init(Renderer * renderer)
 	spheres_init(&renderer->spheres);
 	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
 	renderer->camera.yaw = -90.0f;
+
+	renderer->camera.is_lambert = true;
 	
 	renderer->textures.albedo[0] = IMG_Load("resources/textures/titanium/Titanium-Scuffed_basecolor.png");
 	renderer->textures.normal[0] = IMG_Load("resources/textures/titanium/Titanium-Scuffed_normal.png");
@@ -118,7 +120,7 @@ void renderer_render(Renderer* renderer)
 		shader_use(&renderer->pbr);
 		shader_setVec3(&renderer->pbr, "cam_pos", renderer->camera.position);
 		shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[i]);
-		shader_setBool(&renderer->pbr, "is_lambert", false);
+		shader_setBool(&renderer->pbr, "is_lambert", renderer->camera.is_lambert);
 
 		for (int i = 0; i < renderer->point_lights.num_lights; i++)
 		{
@@ -203,6 +205,9 @@ void update(Camera* camera)
 	if (state[SDL_SCANCODE_A]) direction.x -= 1.0f;
 	if (state[SDL_SCANCODE_S]) direction.z -= 1.0f;
 	if (state[SDL_SCANCODE_D]) direction.x += 1.0f;
+
+	if (state[SDL_SCANCODE_1]) camera->is_lambert = true;
+	if (state[SDL_SCANCODE_2]) camera->is_lambert = false;
 
 	camera->position += forward * velocity * direction.z;
 	camera->position += glm::normalize(glm::cross(forward, up)) * velocity * direction.x;

@@ -37,6 +37,7 @@ struct Camera
 	float pitch;
 	Matrices mats;
 	float dt;
+	int is_lambert;
 };
 
 struct Renderer
