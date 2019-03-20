@@ -38,7 +38,7 @@ void renderer_init(Renderer * renderer)
 		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[i]);
 		int mode = GL_RGB;
 		
-		switch (i)
+		switch (i % 5)
 		{
 		case 0:
 		{
