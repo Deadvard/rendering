@@ -15,6 +15,8 @@ uniform sampler2D metallic_map;
 uniform sampler2D roughness_map;
 uniform sampler2D ambient_occlusion_map;
 
+uniform bool is_lambert;
+
 const int num_point_lights = 16;
 
 uniform vec3 point_light_positions[num_point_lights];
@@ -81,6 +83,14 @@ vec3 fresnel_schlick(float cosTheta, vec3 F0)
     return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
+vec3 Diffuse_Burley( vec3 DiffuseColor, float Roughness, float NoV, float NoL, float VoH )
+{
+    float FD90 = 0.5 + 2 * VoH * VoH * Roughness;
+    float FdV = 1 + (FD90 - 1) * pow( 1 - NoV, 5 );
+    float FdL = 1 + (FD90 - 1) * pow( 1 - NoL, 5 );
+    return DiffuseColor * ( (1 / PI) * FdV * FdL );
+}
+
 void main()
 {
 	vec3 albedo     = pow(texture(albedo_map, tex_coord).rgb, vec3(2.2));
@@ -118,7 +128,23 @@ void main()
         // for energy conservation, the diffuse and specular light can't
         // be above 1.0 (unless the surface emits light); to preserve this
         // relationship the diffuse component (kD) should equal 1.0 - kS.
-        vec3 kD = vec3(1.0) - kS;
+
+		vec3 kD;
+
+		if(is_lambert)
+		{
+			kD = vec3(1,1,1) - kS;
+
+		}
+		else // burley
+		{
+			float NoV = max(dot(N, V), 0.0);
+			float NoL = max(dot(N, L), 0.0);
+		    float NoH = max(dot(N, H), 0.0);
+
+            kD = Diffuse_Burley(albedo, roughness, NoV, NoL, NoH) - kS;
+		}
+
         // multiply kD by the inverse metalness such that only non-metals 
         // have diffuse lighting, or a linear blend if partly metal (pure metals
         // have no diffuse light).

@@ -118,6 +118,7 @@ void renderer_render(Renderer* renderer)
 		shader_use(&renderer->pbr);
 		shader_setVec3(&renderer->pbr, "cam_pos", renderer->camera.position);
 		shader_setMat4(&renderer->pbr, "model", renderer->spheres.model[i]);
+		shader_setBool(&renderer->pbr, "is_lambert", false);
 
 		for (int i = 0; i < renderer->point_lights.num_lights; i++)
 		{
