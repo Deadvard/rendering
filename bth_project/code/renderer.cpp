@@ -26,7 +26,13 @@ void renderer_init(Renderer * renderer)
 	renderer->textures.roughness[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-roughness.png");
 	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-ao.png");
 
-	for (int i = 0; i < renderer->textures.num_textures; i++)
+	renderer->textures.albedo[1] = IMG_Load("resources/textures/iron/rustediron2_basecolor.png");
+	renderer->textures.normal[1] = IMG_Load("resources/textures/iron/rustediron2_normal.png");
+	renderer->textures.metallic[1] = IMG_Load("resources/textures/iron/rustediron2_metallic.png");
+	renderer->textures.roughness[1] = IMG_Load("resources/textures/iron/rustediron2_roughness.png");
+	renderer->textures.ambient_occlusion[1] = IMG_Load("resources/textures/iron/rustediron2_ao.png");
+
+	for (int i = 0; i < renderer->textures.num_textures * renderer->textures.num_texture_types; i++)
 	{
 		glGenTextures(1, &renderer->textures.tex_id[i]);
 		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[i]);
@@ -36,42 +42,42 @@ void renderer_init(Renderer * renderer)
 		{
 		case 0:
 		{
-			mode = textureFormat(renderer->textures.albedo[0]->format->BytesPerPixel);
+			mode = textureFormat(renderer->textures.albedo[i == 0? 0 : 1]->format->BytesPerPixel);
 			glTexImage2D(GL_TEXTURE_2D, 0, mode,
-				renderer->textures.albedo[0]->w, renderer->textures.albedo[0]->h,
-				0, mode, GL_UNSIGNED_BYTE, renderer->textures.albedo[0]->pixels);
+				renderer->textures.albedo[i == 0 ? 0 : 1]->w, renderer->textures.albedo[i == 0 ? 0 : 1]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.albedo[i == 0 ? 0 : 1]->pixels);
 			break;
 		}
 		case 1:
 		{
-			mode = textureFormat(renderer->textures.normal[0]->format->BytesPerPixel);
+			mode = textureFormat(renderer->textures.normal[i == 1 ? 0 : 1]->format->BytesPerPixel);
 			glTexImage2D(GL_TEXTURE_2D, 0, mode,
-				renderer->textures.normal[0]->w, renderer->textures.normal[0]->h,
-				0, mode, GL_UNSIGNED_BYTE, renderer->textures.normal[0]->pixels);
+				renderer->textures.normal[i == 1 ? 0 : 1]->w, renderer->textures.normal[i == 1 ? 0 : 1]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.normal[i == 1 ? 0 : 1]->pixels);
 			break;
 		}
 		case 2:
 		{
-			mode = textureFormat(renderer->textures.metallic[0]->format->BytesPerPixel);
+			mode = textureFormat(renderer->textures.metallic[i == 2 ? 0 : 1]->format->BytesPerPixel);
 			glTexImage2D(GL_TEXTURE_2D, 0, mode,
-				renderer->textures.metallic[0]->w, renderer->textures.metallic[0]->h,
-				0, mode, GL_UNSIGNED_BYTE, renderer->textures.metallic[0]->pixels);
+				renderer->textures.metallic[i == 2 ? 0 : 1]->w, renderer->textures.metallic[i == 2 ? 0 : 1]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.metallic[i == 2 ? 0 : 1]->pixels);
 			break;
 		}
 		case 3:
 		{
-			mode = textureFormat(renderer->textures.roughness[0]->format->BytesPerPixel);
+			mode = textureFormat(renderer->textures.roughness[i == 3 ? 0 : 1]->format->BytesPerPixel);
 			glTexImage2D(GL_TEXTURE_2D, 0, mode,
-				renderer->textures.roughness[0]->w, renderer->textures.roughness[0]->h,
-				0, mode, GL_UNSIGNED_BYTE, renderer->textures.roughness[0]->pixels);
+				renderer->textures.roughness[i == 3 ? 0 : 1]->w, renderer->textures.roughness[i == 3 ? 0 : 1]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.roughness[i == 3 ? 0 : 1]->pixels);
 			break;
 		}
 		case 4:
 		{
-			mode = textureFormat(renderer->textures.ambient_occlusion[0]->format->BytesPerPixel);
+			mode = textureFormat(renderer->textures.ambient_occlusion[i == 4 ? 0 : 1]->format->BytesPerPixel);
 			glTexImage2D(GL_TEXTURE_2D, 0, mode,
-				renderer->textures.ambient_occlusion[0]->w, renderer->textures.ambient_occlusion[0]->h,
-				0, mode, GL_UNSIGNED_BYTE, renderer->textures.ambient_occlusion[0]->pixels);
+				renderer->textures.ambient_occlusion[i == 4 ? 0 : 1]->w, renderer->textures.ambient_occlusion[i == 4 ? 0 : 1]->h,
+				0, mode, GL_UNSIGNED_BYTE, renderer->textures.ambient_occlusion[i == 4 ? 0 : 1]->pixels);
 			break;
 		}
 		}
@@ -118,21 +124,40 @@ void renderer_render(Renderer* renderer)
 			shader_setVec3(&renderer->pbr, "point_light_positions[" + std::to_string(i) + "]", renderer->point_lights.positions[i]);
 			shader_setVec3(&renderer->pbr, "point_light_colors[" + std::to_string(i) + "]", glm::vec3(1,1,1));
 		}
+		if (i == 0)
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[0]);
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[0]);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[1]);
 
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[1]);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[2]);
 
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[2]);
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[3]);
 
-		glActiveTexture(GL_TEXTURE3);
-		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[3]);
+			glActiveTexture(GL_TEXTURE4);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[4]);
+		}
+		else
+		{
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[5]);
 
-		glActiveTexture(GL_TEXTURE4);
-		glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[4]);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[6]);
+
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[7]);
+
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[8]);
+
+			glActiveTexture(GL_TEXTURE4);
+			glBindTexture(GL_TEXTURE_2D, renderer->textures.tex_id[9]);
+		}
 
 
 		glBindVertexArray(renderer->spheres.vao[i]);
