@@ -14,4 +14,30 @@ struct Spheres
 
 void spheres_init(Spheres* spheres);
 
+
+struct spherical_point
+{
+	float Radius;
+	float Phi;
+	float Theta;
+};
+
+static glm::vec3 DirectionVector(spherical_point P)
+{
+	glm::vec3 Result;
+	Result.x = cos(P.Phi) * cos(P.Theta);
+	Result.y = sin(P.Phi);
+	Result.z = cos(P.Phi) * sin(P.Theta);
+	return Result;
+}
+
+static glm::vec3 ToVector(spherical_point P)
+{
+	glm::vec3 Result;
+	Result.x = P.Radius * cos(P.Phi) * cos(P.Theta);
+	Result.y = P.Radius * sin(P.Phi);
+	Result.z = P.Radius * cos(P.Phi) * sin(P.Theta);
+	return Result;
+}
+
 #endif
