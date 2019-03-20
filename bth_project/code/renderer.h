@@ -42,6 +42,8 @@ struct Camera
 
 struct Renderer
 {
+	spherical_point spherical_points[2];
+	
 	PointLights point_lights;
 	Shader pbr;
 	Textures textures;

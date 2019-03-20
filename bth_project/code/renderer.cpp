@@ -2,6 +2,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <SDL/SDL.h>
 
+#define ArrayCount(array) (sizeof(array) / sizeof((array)[0]))
+#define pi32 3.14159265359f
+
 void update(Camera* camera);
 unsigned int createUniformBuffer(unsigned int size, int index);
 void editUniformBuffer(unsigned int buffer, unsigned int size, void* data);
@@ -19,6 +22,11 @@ void renderer_init(Renderer * renderer)
 	spheres_init(&renderer->spheres);
 	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
 	renderer->camera.yaw = -90.0f;
+
+	for (int i = 0; i < renderer->point_lights.num_lights; i++)
+	{
+		renderer->spherical_points[i].Radius = 2.0f;
+	}
 
 	renderer->camera.is_lambert = true;
 	
@@ -109,6 +117,14 @@ void renderer_init(Renderer * renderer)
 void renderer_update(Renderer * renderer)
 {
 	update(&renderer->camera);
+
+	for (int i = 0; i < ArrayCount(renderer->spherical_points); ++i)
+	{
+		renderer->spherical_points[i].Theta += renderer->camera.dt * pi32;
+			
+		renderer->point_lights.positions[i] = 
+			glm::vec3(renderer->spheres.model[i][3]) + ToVector(renderer->spherical_points[i]);
+	}
 }
 
 void renderer_render(Renderer* renderer)
