@@ -131,19 +131,7 @@ void main()
 
 		vec3 kD;
 
-		if(is_lambert)
-		{
-			kD = vec3(1,1,1) - kS;
-
-		}
-		else // burley
-		{
-			float NoV = max(dot(N, V), 0.0);
-			float NoL = max(dot(N, L), 0.0);
-		    float NoH = max(dot(N, H), 0.0);
-
-            kD = Diffuse_Burley(albedo, roughness, NoV, NoL, NoH) - kS;
-		}
+		kD = vec3(1.0) - kS;
 
         // multiply kD by the inverse metalness such that only non-metals 
         // have diffuse lighting, or a linear blend if partly metal (pure metals
@@ -153,8 +141,18 @@ void main()
         // scale light by NdotL
         float NdotL = max(dot(N, L), 0.0);
 
-        // add to outgoing radiance Lo
-        Lo += (kD * albedo / PI + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
+		float NoV = max(dot(N, V), 0.0);
+		float NoL = max(dot(N, L), 0.0);
+		float NoH = max(dot(N, H), 0.0);
+
+		if(!is_lambert)
+		{
+			kD *= Diffuse_Burley(albedo, roughness, NoV, NoL, NoH);
+		    Lo += kD * radiance * NdotL;
+			Lo += specular * radiance * NdotL;
+		}
+		else
+		  Lo += (kD * albedo / PI + specular) * radiance * NdotL;
     }   
     
     // ambient lighting (note that the next IBL tutorial will replace 
