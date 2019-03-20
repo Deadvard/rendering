@@ -50,7 +50,7 @@ void window_destroy(Window * window)
 
 void window_clear()
 {
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glClearColor(135.0f / 255.0f, 206.0f / 255.0f, 235.0f / 255.0f, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
