@@ -20,11 +20,11 @@ void renderer_init(Renderer * renderer)
 	renderer->UBO = createUniformBuffer(sizeof(Matrices), 0);
 	renderer->camera.yaw = -90.0f;
 	
-	renderer->textures.albedo[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-albedo.png");
-	renderer->textures.normal[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-normal-ue.png");
-	renderer->textures.metallic[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-metalness.png");
-	renderer->textures.roughness[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-roughness.png");
-	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/sandstone/sandstonecliff-ao.png");
+	renderer->textures.albedo[0] = IMG_Load("resources/textures/titanium/Titanium-Scuffed_basecolor.png");
+	renderer->textures.normal[0] = IMG_Load("resources/textures/titanium/Titanium-Scuffed_normal.png");
+	renderer->textures.metallic[0] = IMG_Load("resources/textures/titanium/Titanium-Scuffed_metallic.png");
+	renderer->textures.roughness[0] = IMG_Load("resources/textures/titanium/Titanium-Scuffed_roughness.png");
+	renderer->textures.ambient_occlusion[0] = IMG_Load("resources/textures/titanium/Titanium-Scuffed_ao.png");
 
 	renderer->textures.albedo[1] = IMG_Load("resources/textures/iron/rustediron2_basecolor.png");
 	renderer->textures.normal[1] = IMG_Load("resources/textures/iron/rustediron2_normal.png");
